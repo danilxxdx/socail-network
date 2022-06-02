@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/static/css/base.css?{% now 'U' %}" rel="stylesheet">
+
+</head>
+  <body>
+    <header>
+      <form>
+            <form action="" method="post" class="search">
+            	 <input type="search" name="" placeholder="поиск" class="input" />
+            	 <input type="submit" name="" value="" class="submit" />
+            </form>
+        </form>
+        <nav class="nav-panel">
+            <ul>
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Выйти</a></li>
+                <li><a href="{% url 'mypage' request.user.username %}">Моя страница</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}">Войти</a></li>
+                {% endif %}
+                <li><a href="{% url 'posts_list' %}">Посты</a></li>
+                <li><a href="{% url 'userlist'  %}">Люди</a></li>
+                <li><a href="{% url 'addpost'  %}">Добавить пост</a></li>
+                <li><a>Настройки</a></li>
+
+
+            </ul>
+        </nav>
+    </header>
+    <main>
+        {% if request.user.is_authenticated %}
+        <p>hi {{request.user.username}}</p>
+        {% else %}
+        {% block content %}
+        {% endblock %}
+        {% endif %}
+
+        {% block main %}
+        {% endblock %}
+    </main>
+  </body>
+</html>

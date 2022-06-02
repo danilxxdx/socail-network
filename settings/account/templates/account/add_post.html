@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block main %}
+<h1> изображения не загружаються я хз почему, если есть идее пишите. Буду признателен за помощь </h1>
+
+
+<form action="{% url 'addpost' %}" ,enctype="multipart/form-data" , method="post">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit">Добавить</button>
+
+</form>
+
+{% endblock %}d\

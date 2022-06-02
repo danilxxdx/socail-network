@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block main %}
+{% for p in posts %}
+
+
+<div class="item">
+    <div class="textimg">
+        <div class="">
+            {% if p.user.user_profile.photo %}
+              <img src="{{p.user.user_profile.photo.url}}" alt="" , class="circle">
+            {%else %}
+              <img src="/static/png404.png" alt="" , class="circle">
+            {% endif %}
+        </div>
+        <div class="text">
+            <a href="{% url 'mypage' p.user.username %}">{{ p.user.get_full_name }}</a>
+        </div>
+    </div>
+    <p class="text2">{{ p.text }}</p>
+    <img src="{{p.image.url}}" alt="" , class='post_list_img'>
+    <form action="{% url 'like_post' p.pk%}" , method="post">
+        {% csrf_token %}
+<!--        <input type="hidden" name="post_id" value="{{p.id}}">-->
+        {% if request.user not in p.liked.all %}
+          <button type="submit" , name="post_id" , value="{{p.pk}}">Like</button>
+        {% else %}
+          <button type="submit" , name="post_id" , value="{{p.pk}}">UnLike</button>
+        {% endif %}
+    </form>
+  <strong>{{ p.liked.all.count }}</strong>
+    {{ p.likes }}
+</div>
+
+
+{% endfor %}
+{% endblock %}
+
+
+
+
